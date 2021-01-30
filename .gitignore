@@ -1,0 +1,41 @@
+# Nix
+/flake.lock
+result
+
+# Scala
+*.class
+*.log
+
+dist/*
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+.cache/
+.history/
+.lib/
+
+# Scala  
+.scala_dependencies
+.worksheet
+.idea
+.metals/
+.bloop/
+.ammonite/
+
+# Haskell
+dist
+dist-*
+cabal-dev
+*.o
+*.hi
+*.hie
+*.chi
+*.chs.h
+*.dyn_o
+*.dyn_hi
+.hpc
+.hsenv
+.ghc.environment.*
+
+
