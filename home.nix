@@ -8,14 +8,29 @@ let
     tig           
   ];
 
+#  emacs = import ./programs/emacs/default.nix {
+#    pkgs = pkgs;
+#  };
+
+  haskell-language-server = pkgs.haskellPackages.haskell-language-server.override { 
+    supportedGhcVersions = [ "884" "901" ]; 
+  };
+ 
   haskellPkgs = with pkgs.haskellPackages; [
     # brittany            
-    cabal2nix               
-    cabal-install           
+    cabal2nix                          
     implicit-hie
     ghc                    
     stack
-  ] ++ (with pkgs.haskell.packages.ghc865; [ haskell-language-server ]);
+    
+ ] ++ (with pkgs.haskell.packages.ghc8104; [ 
+    # cabal-install
+#    haskell-language-server 
+  ]);
+# ] ++ (with pkgs.haskell.packages.ghc865; [ 
+#    cabal-install
+#    haskell-language-server 
+#  ]);
 
   fishConf = builtins.readFile ./programs/fish/config.fish;
 
@@ -25,6 +40,7 @@ in
   home.packages = with pkgs; [
     aprutil
     awscli
+    dhall
     fd
     go
     htop
@@ -34,11 +50,13 @@ in
     ripgrep
     rnix-lsp
     tree
+    vagrant
  ] ++ gitPkgs ++ haskellPkgs;
 
   imports = [
-    ./programs/neovim/default.nix
     ./programs/git/default.nix
+    ./programs/neovim/default.nix
+    ./programs/tmux/default.nix
   ]; 
 
   programs.bat = {
@@ -51,8 +69,30 @@ in
   programs.emacs = {
     enable = true;
     extraPackages = epkgs: [
-      epkgs.nix-mode
+      epkgs.all-the-icons
+      epkgs.company
+      epkgs.counsel
+      epkgs.doom-themes
+      epkgs.doom-modeline
+      epkgs.evil
+      epkgs.find-file-in-project
+      epkgs.general
+      epkgs.ivy
+      epkgs.smartparens
+      epkgs.typescript-mode
+      epkgs.lsp-mode
+      epkgs.lsp-ui
+      epkgs.lsp-java
+      epkgs.lsp-metals
+      epkgs.lsp-haskell
+      epkgs.lsp-treemacs
+      epkgs.lsp-ivy
+      epkgs.helm-lsp
+      epkgs.which-key
       epkgs.magit
+      epkgs.nix-mode
+      epkgs.smartparens
+      epkgs.swiper
     ];
   };
 
@@ -65,28 +105,13 @@ in
     enable = true;
   };
 
-  programs.tmux = {
-    enable = true;
-    keyMode = "vi";
-    terminal = "screen-256color";
-    prefix = "M-b";
-    sensibleOnTop = false;
-    shell = "$HOME/.nix-profile/bin/fish";
-    historyLimit=5000;
-    clock24 = true;
-    extraConfig = tmuxConf;
-    plugins = with pkgs; [
-      {
-         plugin = tmuxPlugins.resurrect;
-         extraConfig = "set -g @resurrect-strategy-nvim 'session'";
-      }
-    ];
-  };
-
   programs.home-manager = {
     enable = true;
     path = "…";
   };
+
+  # home.file.".emacs.d".source = ./programs/emacs/.emacs.d;
+  home.file.".emacs.d/init.el".source = ./programs/emacs/init.el;
 }
 
 

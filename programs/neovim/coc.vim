@@ -12,26 +12,27 @@ let g:coc_snippet_next = '<Tab>'
 let g:coc_snippet_prev = '<S-Tab>'
 
 " list of the extensions to make sure are always installed
-let g:coc_global_extensions = [
-            \'coc-yank',
-            \'coc-pairs',
-            \'coc-json',
-            \'coc-actions',
-            \'coc-css',
-            \'coc-html',
-            \'coc-tsserver',
-            \'coc-yaml',
-            \'coc-lists',
-            \'coc-snippets',
-            \'coc-python',
-            \'coc-clangd',
-            \'coc-prettier',
-            \'coc-xml',
-            \'coc-syntax',
-            \'coc-git',
-            \'coc-marketplace',
-            \'coc-highlight',
-            \]
+let g:coc_global_extensions = []
+"let g:coc_global_extensions = [
+"            \'coc-yank',
+"            \'coc-pairs',
+""            \'coc-json',
+"            \'coc-actions',
+"            \'coc-css',
+"            \'coc-html',
+"            \'coc-tsserver',
+"            \'coc-yaml',
+"            \'coc-lists',
+"            \'coc-snippets',
+"            \'coc-python',
+"            \'coc-clangd',
+"            \'coc-prettier',
+"            \'coc-xml',
+"            \'coc-syntax',
+"            \'coc-git',
+"            \'coc-marketplace',
+"            \'coc-highlight',
+"            \]
 
 " coc show signature help
 autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')

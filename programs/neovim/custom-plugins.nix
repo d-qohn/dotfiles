@@ -33,6 +33,16 @@
       sha256 = "1by56rflr0bmnjvcvaa9r228zyrmxwfkzkclxvdfscm7l7n7jnmh";
     };
   };
+
+  nerdtree-git-plugin = buildVimPlugin {
+    name = "nerdtree-git-plugin";
+    src = builtins.fetchGit {
+      name   = "nerdtree-git-plugin";
+      url    ="https://github.com/Xuyuanp/nerdtree-git-plugin.git";
+      rev = "03ba4761aea53100476a8a0f6c0bae69d83290d1";
+      ref = "master";
+    };
+  };
 }
  
 
