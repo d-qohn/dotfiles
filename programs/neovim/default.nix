@@ -19,7 +19,28 @@ in {
     enable = true;
 
     plugins      = with plugins; [
+      #coc
       coc-nvim
+      coc-yank
+      coc-json
+      coc-yank
+      coc-pairs
+      coc-json
+#      coc-actions
+#      coc-css
+#      coc-html
+#      coc-tsserver
+#      coc-yaml
+#      coc-lists
+#      coc-snippets
+#      coc-python
+#      coc-clangd
+#      coc-prettier
+#      coc-xml
+#      coc-syntax
+      coc-git
+#      coc-marketplace
+#      coc-highlight
       fzf-vim
       haskell-vim
       indentLine
@@ -47,7 +68,7 @@ in {
     extraConfig = extraConfig + cocConfig;
 
     withNodeJs   = true;
-    withPython   = true;
+    withPython = true;
     withPython3  = true;
 
     viAlias      = true;
