@@ -25,21 +25,25 @@ let
 
   tmuxConf = builtins.readFile ./programs/tmux/.tmux.conf;
 
-  ghc = pkgs.haskell.compiler.ghc865;
+  # ghc = pkgs.haskell.compiler.ghc865;
 in
 {
   home.packages = with pkgs; [
+    adoptopenjdk-hotspot-bin-8
     aprutil
     awscli
     cabal-install
     cachix
     dhall
     fd
-    ghc
+    # ghc
     go
     gradle
+    grpcui
+    grpcurl
     htop
     hugo
+    jhead
     jo
     jq
     maven
@@ -67,6 +71,7 @@ in
     extraPackages = epkgs: [
       epkgs.all-the-icons
       epkgs.company
+      epkgs.consult
       epkgs.counsel
       epkgs.doom-themes
       epkgs.doom-modeline
@@ -75,7 +80,10 @@ in
       epkgs.find-file-in-project
       epkgs.fira-code-mode
       epkgs.general
+      epkgs.highlight-indent-guides
       epkgs.ivy
+      epkgs.marginalia
+      epkgs.material-theme
       epkgs.smartparens
       epkgs.treemacs
       epkgs.treemacs-all-the-icons
@@ -97,9 +105,15 @@ in
       epkgs.magit
       epkgs.neotree
       epkgs.nix-mode
+      epkgs.protobuf-mode
+      epkgs.plantuml-mode
+      epkgs.selectrum
       epkgs.smartparens
       epkgs.swiper
+      # epkgs.vertico
       epkgs.vterm
+      epkgs.yaml
+      epkgs.yaml-mode
     ];
   };
 

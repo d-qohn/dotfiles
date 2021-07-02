@@ -1,3 +1,6 @@
+(set-face-font 'default "JetBrains Mono-13")
+(global-auto-revert-mode t)
+
 (setq make-backup-files t)
 (setq backup-directory-alist `(("." . "~/.emacs.d/.saves")) )
 (setq inhibit-startup-screen t)
@@ -28,33 +31,12 @@
 (use-package doom-themes
   :ensure t
   :config
-  ;;(load-theme 'doom-challenger-deep t))
-  ;;(load-theme 'doom-nova t))
-  ;; (load-theme 'doom-losvkem t))
-  ;; ^ Not found
-  (load-theme 'doom-opera t)
-  ;;(load-theme 'doom-peacock t))
-  ;; (load-theme 'doom-snazzy t))
-  ;;(load-theme 'doom-moonlight t))
-  ;; (load-theme 'doom-dracula t))
-  ;; (load-theme 'doom-dark+ t))
-  ;; (load-theme 'doom-one t)
-
-  ;; Enable flashing mode-line on errors
-  ;; (doom-themes-visual-bell-config)
-  ;; Enable custom neotree theme (all-the-icons must be installed!)
+  (load-theme 'doom-rouge t)
+  ;;(load-theme 'doom-opera-light t)
   (doom-themes-neotree-config)
   (setq doom-themes-neotree-file-icons t)
-  ;; or for treemacs users
-  ;;(setq doom-themes-treemacs-theme "doom-colors") ; use "doom-colors" for less minimal icon theme
-  ;;(doom-themes-treemacs-config)
-  ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-
-  ;;(require 'doom-themes-ext-treemacs)
-  ;;(require 'doom-themes-ext-org)
-  ;;(setq doom-themes-treemacs-theme "doom-colors")
 
 (use-package all-the-icons
   :ensure t)
@@ -70,42 +52,6 @@
 
 (use-package general
   :ensure t)
-
-;; Ivy things
-(use-package ivy
-  :ensure t
-  :diminish ivy-mode
-  :demand t
-  :config
-  (ivy-mode 1)
-  (setq ivy-use-virtual-buffers t)
-  (setq ivy-height 15)
-  (setq ivy-count-format "(%d/%d) ")
-  :general
-  (general-define-key
-   :keymaps 'ivy-minibuffer-map
-   "C-j" 'ivy-next-line
-   "C-k" 'ivy-previous-line)
-  (general-define-key
-   :keymaps 'ivy-switch-buffer-map
-   "C-k" 'ivy-previous-line))
-
-(use-package counsel 
-  :ensure t
-  :general
-  (general-define-key
-   :keymaps 'normal
-   "SPC f f" 'counsel-find-file
-   "SPC h f" 'counsel-describe-function
-   "SPC u"   'counsel-unicode-char
-   "SPC p s" 'counsel-rg
-   "SPC SPC" 'counsel-M-x))
-
-(use-package swiper :ensure t
-  :general
-  (general-define-key
-   :keymaps 'normal
-   "SPC s" 'swiper))
 
 (use-package project
   :ensure t
@@ -146,12 +92,14 @@
          (haskell-mode . lsp)
          (scala-mode . lsp)
          (java-mode . lsp)
+         (yaml-mode . lsp)
 	 (typescript-mode . lsp-deferred)
          ;; if you want which-key integration
          (lsp-mode . lsp-enable-which-key-integration))
   :commands lsp)
 
-
+(use-package plantuml-mode
+  :ensure t)
 
 (use-package typescript-mode
   :ensure t
@@ -165,8 +113,16 @@
 (use-package lsp-java
   :ensure t
   :config
-  (add-hook 'java-mode-hook 'lsp))
+  (add-hook 'java-mode-hook 'lsp)
+  (setq lsp-java-jdt-download-url  "https://download.eclipse.org/jdtls/milestones/0.57.0/jdt-language-server-0.57.0-202006172108.tar.gz"))
 
+;; protobuf
+(use-package protobuf-mode
+  :ensure t)
+
+;; yaml 
+(use-package yaml-mode
+  :ensure t)
 
 ;; Scala
 (use-package scala-mode
@@ -200,7 +156,9 @@
   :init
   (global-flycheck-mode t))
 (use-package yasnippet
-  :ensure t)
+  :ensure t
+  :config
+  (yas-global-mode t))
 (use-package lsp-ui
   :ensure t
   :commands lsp-ui-mode)
@@ -246,10 +204,7 @@
 ;; optionally if you want to use debugger
 ;; (use-package company-capfdap-mode)
 ;; (use-package dap-LANGUAGE) to load the dap adapter for your language
-;; optional if you want which-key integration
-;;(use-package which-key
-;;    :config
-;;    (which-key-mode))
+
 (use-package which-key
   :ensure t
   :config
@@ -275,120 +230,56 @@
 (use-package neotree
   :ensure t)
 
-
-
-;; treemacs
-;;(use-package treemacs
-;;  :ensure t
-;;  :defer t
-;;  :init
-;;  (with-eval-after-load 'winum
-;;    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
-;;  :config
-;;  (progn
-;;    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
-;;          treemacs-deferred-git-apply-delay      0.5
-;;          treemacs-directory-name-transformer    #'identity
-;;          treemacs-display-in-side-window        t
-;;          treemacs-eldoc-display                 t
-;;          treemacs-file-event-delay              5000
-;;          treemacs-file-extension-regex          treemacs-last-period-regex-value
-;;          treemacs-file-follow-delay             0.2
-;;          treemacs-file-name-transformer         #'identity
-;;          treemacs-follow-after-init             t
-;;          treemacs-expand-after-init             t
-;;          treemacs-git-command-pipe              ""
-;;          treemacs-goto-tag-strategy             'refetch-index
-;;          treemacs-indentation                   2
-;;          treemacs-indentation-string            " "
-;;          treemacs-is-never-other-window         nil
-;;          treemacs-max-git-entries               5000
-;;          treemacs-missing-project-action        'ask
-;;          treemacs-move-forward-on-expand        nil
-;;          treemacs-no-png-images                 nil
-;;          treemacs-no-delete-other-windows       t
-;;          treemacs-project-follow-cleanup        nil
-;;          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
-;;          treemacs-position                      'left
-;;          treemacs-read-string-input             'from-child-frame
-;;          treemacs-recenter-distance             0.1
-;;          treemacs-recenter-after-file-follow    nil
-;;          treemacs-recenter-after-tag-follow     nil
-;;          treemacs-recenter-after-project-jump   'always
-;;          treemacs-recenter-after-project-expand 'on-distance
-;;          treemacs-litter-directories            '("/node_modules" "/.venv" "/.cask")
-;;          treemacs-show-cursor                   nil
-;;          treemacs-show-hidden-files             t
-;;          treemacs-silent-filewatch              nil
-;;          treemacs-silent-refresh                nil
-;;          treemacs-sorting                       'alphabetic-asc
-;;          treemacs-space-between-root-nodes      t
-;;          treemacs-tag-follow-cleanup            t
-;;          treemacs-tag-follow-delay              1.5
-;;          treemacs-user-mode-line-format         nil
-;;          treemacs-user-header-line-format       nil
-;;          treemacs-width                         35
-;;          treemacs-workspace-switch-cleanup      nil)
-;;
-;;    ;; The default width and height of the icons is 22 pixels. If you are
-;;    ;; using a Hi-DPI display, uncomment this to double the icon size.
-;;    ;;(treemacs-resize-icons 44)
-;;
-;;    (treemacs-follow-mode t)
-;;    (treemacs-filewatch-mode t)
-;;    (treemacs-fringe-indicator-mode 'always)
-;;    (pcase (cons (not (null (executable-find "git")))
-;;                 (not (null treemacs-python-executable)))
-;;      (`(t . t)
-;;       (treemacs-git-mode 'deferred))
-;;      (`(t . _)
-;;       (treemacs-git-mode 'simple))))
-;;  :general
-;;  (general-define-key
-;;   :keymaps 'normal
-;;   "SPC t" 'treemacs-select-window)
-;;   :bind
-;;   (:map global-map
-;;        ("C-x t 1"   . treemacs-delete-other-windows)
-;;        ("C-x t t"   . treemacs)
-;;        ("C-x t B"   . treemacs-bookmark)
-;;        ("C-x t C-t" . treemacs-find-file)
-;;        ("C-x t M-t" . treemacs-find-tag)))
-;;
-;;(use-package treemacs-evil
-;;  :after (treemacs evil)
-;;  :ensure t)
-;;
-;;(use-package treemacs-projectile
-;;  :after (treemacs projectile)
-;;  :ensure t)
-;;
-;;(use-package treemacs-icons-dired
-;;  :after (treemacs dired)
-;;  :ensure t
-;;  :config (treemacs-icons-dired-mode))
-;;
-;;(use-package treemacs-magit
-;;  :after (treemacs magit)
-;;  :ensure t)
-;;
-;;(use-package treemacs-persp ;;treemacs-perspective if you use perspective.el vs. persp-mode
-;;  :after (treemacs persp-mode) ;;or perspective vs. persp-mode
-;;  :ensure t
-;;  :config (treemacs-set-scope-type 'Perspectives))
-;;
-;;(use-package treemacs-all-the-icons
-;;  :ensure t
-;;  :config
-;;  (treemacs-load-theme "all-the-icons"))
-;;(require 'treemacs-all-the-icons)
-;;(treemacs-load-theme "all-the-icons")
-
 (use-package vterm
   :ensure t)
 
-;;(use-package magit
-;; :bind ("C-." . hello))
+(use-package selectrum
+  :ensure t
+  :config
+  (selectrum-mode +1))
+
+;; Enable richer annotations using the Marginalia package
+(use-package marginalia
+  :ensure t
+  ;; Either bind `marginalia-cycle` globally or only in the minibuffer
+  :bind (("M-A" . marginalia-cycle)
+         :map minibuffer-local-map
+         ("M-A" . marginalia-cycle))
+
+  ;; The :init configuration is always executed (Not lazy!)
+  :init
+
+  ;; Must be in the :init section of use-package such that the mode gets
+  ;; enabled right away. Note that this forces loading the package.
+  (marginalia-mode))
+
+(use-package consult
+  :ensure t
+  :config
+    (setq consult-project-root-function
+        (lambda ()
+          (when-let (project (project-current))
+            (car (project-roots project)))))
+  :general
+    (general-define-key
+     :keymaps 'normal
+     "SPC SPC f" 'consult-find
+     "SPC SPC g" 'consult-grep
+     "SPC SPC G" 'consult-git-grep
+     "SPC SPC r" 'consult-ripgrep))
+
+
+(use-package highlight-indent-guides
+  :ensure t
+  :diminish
+  :hook
+  ((prog-mode yaml-mode) . highlight-indent-guides-mode)
+  ((prog-mode scala-mode) . highlight-indent-guides-mode)
+  :custom
+  (highlight-indent-guides-auto-enabled t)
+  (highlight-indent-guides-responsive t)
+  (highlight-indent-guides-method 'character))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

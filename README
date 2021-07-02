@@ -11,10 +11,11 @@ Author:
   DQOHN: https://github.com/DQOHN
 
 nix-channel:
+
 ```
 $ nix-channel --list
-home-manager https://github.com/nix-community/home-manager/archive/release-20.09.tar.gz
-nixos-20.09 https://nixos.org/channels/nixos-20.09
-nixpkgs https://nixos.org/channels/nixos-20.09
+home-manager https://github.com/nix-community/home-manager/archive/release-21.05.tar.gz
+nixos-21.05 https://nixos.org/channels/nixos-21.05
+nixpkgs https://nixos.org/channels/nixos-21.05
 ```
 

@@ -68,7 +68,6 @@ in {
     extraConfig = extraConfig + cocConfig;
 
     withNodeJs   = true;
-    withPython = true;
     withPython3  = true;
 
     viAlias      = true;
